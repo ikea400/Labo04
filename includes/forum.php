@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"])) {
+    header("Location: ../index.php");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,16 +18,7 @@
 </head>
 
 <body>
-    <?php
-    session_start();
-
-    if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"])) {
-        header("Location: ../index.php");
-        return;
-    }
-
-    echo "<p>Bonjour {$_SESSION["LOGGED_IDENTITY"]}!</p>";
-    ?>
+    <?php echo "<p>Bonjour {$_SESSION["LOGGED_IDENTITY"]}!</p>"; ?>
     <a href="../">Se déconnecter</a>
     <form>
         <label for="message">Message:</label>
