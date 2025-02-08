@@ -1,4 +1,7 @@
 <?php
+session_start();
+// Reset login state
+unset($_SESSION["LOGGED_IDENTITY"]);
 try {
     // Paramètres de connexion
     $config = require_once "./includes/config.php";
@@ -32,7 +35,9 @@ try {
             count($results) == 1 &&
             password_verify($_GET["password"],  $results[0]["password"])
         ) {
-            header("Location: forum.php");
+            $_SESSION["LOGGED_IDENTITY"] = $_GET["username"];
+
+            header("Location: includes/forum.php");
         } else {
             echo "Invalid username or password";
         }
@@ -66,12 +71,16 @@ try {
 <body>
     <form>
         <label for="username">Username</label>
-        <input name="username" type="text" required />
+        <input name="username" type="text" value='<?php echo isset($_SESSION["username"]) && !empty($_SESSION["username"]) ? $_SESSION["username"] : "" ?>' required />
         <label for="password">Password</label>
-        <input name="password" type="password" required />
-        <button type='submit'>Rechercher</button>
+        <input name="password" type="password" value='<?php echo isset($_SESSION["password"]) && !empty($_SESSION["password"]) ? $_SESSION["password"] : "" ?>' required />
+        <button type='submit'>Login</button>
         <a href="./includes/inscription.php">S'enregister</a>
     </form>
 </body>
 
 </html>
+
+<?php
+unset($_SESSION["username"]);
+unset($_SESSION["password"]);
