@@ -43,15 +43,13 @@ if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"]))
                 $options
             );
 
-            $users_names = [];
             if (isset($_GET["message"]) && !empty($_GET["message"])) {
 
-                $id_request = $pdo->prepare("SELECT id FROM usagers WHERE name = :username");
-                $id_request->execute(['username' =>  $_SESSION["LOGGED_IDENTITY"]]);
+                $requete = $pdo->prepare("SELECT id FROM usagers WHERE name = :username");
+                $requete->execute(['username' =>  $_SESSION["LOGGED_IDENTITY"]]);
 
-                $result = $id_request->fetchAll();
+                $result = $requete->fetchAll();
                 if (!empty($result)) {
-                    $users_names[$result[0]["id"]] = $_SESSION["LOGGED_IDENTITY"];
 
                     $requete = $pdo->prepare("INSERT INTO messages (user_id, date, message) VALUES (:id, NOW(), :msg);");
                     $requete->execute(["id" => $result[0]["id"], "msg" => $_GET["message"]]);
@@ -65,7 +63,7 @@ if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"]))
             }
 
             $request = $pdo->query("SELECT * FROM messages");
-
+            $users_names = [];
             while ($result = $request->fetch()) {
                 $id = $result["user_id"];
 
