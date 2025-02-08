@@ -1,20 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <p>Bonjour NAME!</p>
-  <a href="./">Se déconnecter</a>
-  <form>
-    <label for="message">Message:</label>
-    <input name="message" placeholder="Message à envoyer">
-    <button type="submit">Envoyer</button>
-  </form>
-  <div>
-    <div>(2025-02-07 20:50:05) Eric: Message de eric</div>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #forum-container {
+        display: flex;
+        flex-direction: column;
+        width: 50em;
+        padding: 1.25em;
+        padding-top: 0.5em;
+        border: 1px solid black;
+        background-color: #ededed;
+      }
+      #chat {
+        height: 30em;
+        margin-top: 0.5em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        padding: 0.25em;
+        background-color: white;
+      }
+      #message {
+        flex-grow: 100;
+      }
+      #message_form {
+        display: flex;
+        gap: 0.5em;
+      }
+      #forum-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="forum-container">
+      <header id="forum-header">
+        <div>Bonjour NAME!</div>
+        <button onclick="location.href='./'" type="button">
+          Se déconnecter
+        </button>
+      </header>
+      <div id="chat">
+        <div>(2025-02-07 20:50:05) <b>Eric:</b> Message de eric</div>
+      </div>
+      <form id="message_form">
+        <input id="message" name="message" placeholder="Message à envoyer" />
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+  </body>
 </html>

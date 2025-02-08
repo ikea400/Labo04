@@ -1,54 +1,3 @@
-<?php
-session_start();
-// Reset login state
-unset($_SESSION["LOGGED_IDENTITY"]);
-try {
-    // Paramètres de connexion
-    $config = require_once "./includes/config.php";
-    $options = [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ];
-
-    // Instancier la connexion
-    $pdo = new PDO(
-        "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
-        $config['username'],
-        $config['password'],
-        $options
-    );
-
-    if (
-        isset($_GET["username"]) &&
-        !empty($_GET["username"]) &&
-        !empty($_GET["password"]) &&
-        isset($_GET["password"])
-    ) {
-        // Generation de la requete
-        $requete = $pdo->prepare("SELECT password FROM usagers WHERE name = :username");
-        $requete->execute(['username' => $_GET['username']]);
-
-        // Execution de la requete
-        $results = $requete->fetchAll();
-
-        if (
-            count($results) == 1 &&
-            password_verify($_GET["password"],  $results[0]["password"])
-        ) {
-            $_SESSION["LOGGED_IDENTITY"] = $_GET["username"];
-
-            header("Location: includes/forum.php");
-        } else {
-            echo "Invalid username or password";
-        }
-    }
-} catch (PDOException $err) {
-    //error_log('PDOException: :' . $err->getMessage())
-    //header("Location: erreur.php");
-    die($err->getMessage());
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,6 +18,56 @@ try {
 </head>
 
 <body>
+    <?php
+    session_start();
+    // Reset login state
+    unset($_SESSION["LOGGED_IDENTITY"]);
+    try {
+        // Paramètres de connexion
+        $config = require_once "./includes/config.php";
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ];
+
+        // Instancier la connexion
+        $pdo = new PDO(
+            "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
+            $config['username'],
+            $config['password'],
+            $options
+        );
+
+        if (
+            isset($_GET["username"]) &&
+            !empty($_GET["username"]) &&
+            !empty($_GET["password"]) &&
+            isset($_GET["password"])
+        ) {
+            // Generation de la requete
+            $requete = $pdo->prepare("SELECT password FROM usagers WHERE name = :username");
+            $requete->execute(['username' => $_GET['username']]);
+
+            // Execution de la requete
+            $results = $requete->fetchAll();
+
+            if (
+                count($results) == 1 &&
+                password_verify($_GET["password"],  $results[0]["password"])
+            ) {
+                $_SESSION["LOGGED_IDENTITY"] = $_GET["username"];
+
+                header("Location: includes/forum.php");
+            } else {
+                echo "Invalid username or password";
+            }
+        }
+    } catch (PDOException $err) {
+        //error_log('PDOException: :' . $err->getMessage())
+        //header("Location: erreur.php");
+        die($err->getMessage());
+    }
+    ?>
     <form>
         <label for="username">Username</label>
         <input name="username" type="text" value='<?php echo isset($_SESSION["username"]) && !empty($_SESSION["username"]) ? $_SESSION["username"] : "" ?>' required />
@@ -82,5 +81,6 @@ try {
 </html>
 
 <?php
+// These session tokens should be used only once
 unset($_SESSION["username"]);
 unset($_SESSION["password"]);
