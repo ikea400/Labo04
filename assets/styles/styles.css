@@ -1,0 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+.vt323-regular {
+  font-family: "VT323", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#formulaire {
+  display: flex;
+  flex-direction: column;
+  width: 20em;
+  height: 25em;
+  gap: 0.5em;
+  align-items: center;
+  padding: 20px;
+  background-color: transparent;
+  position: relative;
+  top: 10em;
+  scale: 1.5;
+  z-index: 2;
+}
+body {
+  background-color: black;
+}
+.label {
+  font-family: "VT323";
+  font-size: 2.5em;
+  color: rgb(0, 255, 85);
+}
+.input {
+  font-family: "VT323";
+  height: 2em;
+  width: 15em;
+  font-size: 1em;
+  border-color: rgb(0, 255, 85);
+  border-style: double;
+  border-radius: 0.25em;
+  margin-bottom: 1.5em;
+}
+#container {
+  height: 2em;
+  width: 15em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.btn {
+  width: 6em;
+  font-family: "VT323";
+  font-size: 1em;
+  background-color: transparent;
+  color: rgb(0, 255, 85);
+  border-color: rgb(0, 255, 85);
+  border-style: double;
+  border-radius: 0.2em;
+}
+
+.btn:hover {
+  scale: 1.1;
+}
+
+#nocompte {
+  color: rgb(0, 255, 85);
+  font-family: "VT323";
+  font-size: 0.75em;
+}
+
+#video {
+  z-index: 1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+#containerForm {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+#bodyScreamer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#video2 {
+  border-radius: 0.75em;
+  scale: 1.3;
+  margin-top: 0;
+}
+#text {
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5em;
+}
+
+#forum-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#forum-container {
+  display: flex;
+  flex-direction: column;
+  width: 50em;
+  padding: 1.25em;
+  padding-top: 0.5em;
+  border: 1px solid black;
+  background-color: #ededed;
+}
+
+#chat {
+  height: 30em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border: 1px solid black;
+  padding: 0.25em;
+  background-color: white;
+}
+
+#message {
+  flex-grow: 100;
+}
+
+#message_form {
+  display: flex;
+  gap: 0.5em;
+}
+
+#forum-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#errors-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  color: red;
+  font-family: "VT323";
+  font-size: large;
+  height: 4em;
+  overflow: hidden;
+}

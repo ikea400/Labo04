@@ -1,81 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-        form {
-            display: flex;
-            flex-direction: column;
-            width: 20em;
-            gap: 0.5em;
-            align-items: center;
-            border: 1px solid black;
-        }
-    </style>
+    <link href="./assets/styles/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Login</title>
 </head>
 
 <body>
-    <?php
-    session_start();
-    // Reset login state
-    unset($_SESSION["LOGGED_IDENTITY"]);
-    try {
-        // Paramètres de connexion
-        $config = require_once "./includes/config.php";
-        $options = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ];
+    <video autoplay muted loop id="video">
+        <source src="./assets/videos/mylivewallpapers-com-Matrix-EDIT.mp4">
+    </video>
+    <div class="user-container">
+        <div id="errors-container">
+            <?php
+            session_start();
+            // Réinitialiser la session
+            unset($_SESSION["LOGGED_IDENTITY"]);
+            try {
+                // Paramètres de connexion
+                $config = require_once "./includes/config.php";
+                $options = [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ];
 
-        // Instancier la connexion
-        $pdo = new PDO(
-            "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
-            $config['username'],
-            $config['password'],
-            $options
-        );
+                // Instancier la connexion
+                $pdo = new PDO(
+                    "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
+                    $config['username'],
+                    $config['password'],
+                    $options
+                );
 
-        if (
-            isset($_GET["username"]) &&
-            !empty($_GET["username"]) &&
-            !empty($_GET["password"]) &&
-            isset($_GET["password"])
-        ) {
-            // Generation de la requete
-            $requete = $pdo->prepare("SELECT password FROM usagers WHERE name = :username");
-            $requete->execute(['username' => $_GET['username']]);
+                // Vérifier si l'utilisateur veux se connecter
+                if (
+                    isset($_GET["username"]) &&
+                    !empty($_GET["username"]) &&
+                    !empty($_GET["password"]) &&
+                    isset($_GET["password"])
+                ) {
+                    // Enleve tous les espace de début et de fin pour éviter les erreurs utilisateurs
+                    $username = trim($_GET["username"]);
+                    $password = trim($_GET["password"]);
 
-            // Execution de la requete
-            $results = $requete->fetchAll();
+                    // Detecter les injections sql et les rediriger si trouver
+                    require_once "./includes/detection.php";
+                    if (
+                        detect_sql_injection($username) ||
+                        detect_sql_injection($password)
+                    ) {
+                        // Aviser l'utilisateur qu'il n'est pas autorisé de faire des injections sql.
+                        header("Location: ./includes/prohibited.php");
+                        die();
+                    }
 
-            if (
-                count($results) == 1 &&
-                password_verify($_GET["password"],  $results[0]["password"])
-            ) {
-                $_SESSION["LOGGED_IDENTITY"] = $_GET["username"];
+                    // Generation de la requete
+                    $requete = $pdo->prepare("SELECT password FROM usagers WHERE name = :username");
+                    $requete->execute(['username' => $username]);
 
-                header("Location: includes/forum.php");
-            } else {
-                echo "Invalid username or password";
+                    // Execution de la requete
+                    $results = $requete->fetchAll();
+
+                    if (
+                        count($results) == 1 &&
+                        password_verify($password,  $results[0]["password"])
+                    ) {
+                        // L'utilisateur c'est connectée, connectons et redirigeons le vers le forum.
+                        $_SESSION["LOGGED_IDENTITY"] = $username;
+                        header("Location: includes/forum.php");
+                    } else {
+                        // Afficher à l'utilisateur une error
+                        echo "<div class='error'>Invalid username or password</div>";
+                    }
+                }
+            } catch (PDOException $err) {
+                // On affiche l'erreur à l'utilisateur. Pas optimal et devrais pas être mits en productions
+                die($err->getMessage());
             }
-        }
-    } catch (PDOException $err) {
-        //error_log('PDOException: :' . $err->getMessage())
-        //header("Location: erreur.php");
-        die($err->getMessage());
-    }
-    ?>
-    <form>
-        <label for="username">Username</label>
-        <input name="username" type="text" value='<?php echo isset($_SESSION["username"]) && !empty($_SESSION["username"]) ? $_SESSION["username"] : "" ?>' required />
-        <label for="password">Password</label>
-        <input name="password" type="password" value='<?php echo isset($_SESSION["password"]) && !empty($_SESSION["password"]) ? $_SESSION["password"] : "" ?>' required />
-        <button type='submit'>Login</button>
-        <a href="./includes/inscription.php">S'enregister</a>
-    </form>
+            ?>
+        </div>
+        <div id="containerForm">
+            <form id="formulaire">
+                <label class="label" for="username">Identifiant:</label>
+                <input class="input" name="username" type="text" placeholder="Entrez votre nom d'utilisateur" required
+                    value='<?php echo isset($_SESSION["username"]) && !empty($_SESSION["username"]) ? $_SESSION["username"] : "" ?>' />
+                <label class="label" for="password">Mot de passe:</label>
+                <input class="input" name="password" placeholder="Entrez votre mot de passe" type="password" required
+                    value='<?php echo isset($_SESSION["password"]) && !empty($_SESSION["password"]) ? $_SESSION["password"] : "" ?>' />
+                <div id="container">
+                    <button class="btn" type="submit">Connecter</button>
+                    <button class="btn" type="reset"> Effacer</button>
+                </div>
+                <div id="inscription">
+                    <a id="nocompte" href="./includes/inscription.php">Pas de compte ?</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

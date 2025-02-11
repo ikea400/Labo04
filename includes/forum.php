@@ -9,20 +9,20 @@ if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"]))
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./assets/styles/styles.css">
+    <title>Forum</title>
+    <link rel="stylesheet" href="../assets/styles/styles.css">
 </head>
 
-<body>
+<body id="forum-body">
     <div id="forum-container">
         <header id="forum-header">
             <?php echo "<div>Bonjour {$_SESSION["LOGGED_IDENTITY"]}!</div>" ?>
-            <button onclick="location.href='./'" type="button">
+            <button onclick="location.href='../index.php'" type="button">
                 Se déconnecter
             </button>
         </header>
@@ -63,7 +63,7 @@ if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"]))
                     }
                 }
 
-                $request = $pdo->query("SELECT * FROM messages");
+                $request = $pdo->query("SELECT * FROM messages  ORDER BY date LIMIT 0, 50");
                 $users_names = [];
                 while ($result = $request->fetch()) {
                     $id = $result["user_id"];
@@ -86,7 +86,7 @@ if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"]))
             ?>
         </div>
         <form id="message_form">
-            <input id="message" name="message" placeholder="Message à envoyer" />
+            <input id="message" name="message" placeholder="Message à envoyer" autofocus />
             <button type="submit">Envoyer</button>
         </form>
     </div>
