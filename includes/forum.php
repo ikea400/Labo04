@@ -15,7 +15,6 @@ if (!isset($_SESSION["LOGGED_IDENTITY"]) || empty($_SESSION["LOGGED_IDENTITY"]))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../assets/styles/styles.css" rel="stylesheet">
     <title>Forum</title>
-
 </head>
 
 <body id="body-frame">
