@@ -8,10 +8,10 @@
     <title>Document</title>
 </head>
 
-<body id="bodyScreamer">
+<body id="body-screamer">
     <h1 id="text">NO SQL INJECTION ALLOWED !!</h1>
     <video autoplay controls id="video2">
-        <source src="../assets/videos/download.mp4">
+        <source src="../assets/videos/prohibited.mp4">
     </video>
 </body>
 

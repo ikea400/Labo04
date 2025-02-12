@@ -20,14 +20,14 @@
   scale: 1.5;
   z-index: 2;
 }
-body {
-  background-color: black;
-}
+
 .label {
   font-family: "VT323";
   font-size: 2.5em;
   color: rgb(0, 255, 85);
+  text-shadow: 0px 0px 13px rgba(0, 255, 1, 1);
 }
+
 .input {
   font-family: "VT323";
   height: 2em;
@@ -38,16 +38,18 @@ body {
   border-radius: 0.25em;
   margin-bottom: 1.5em;
 }
+
 #container {
   height: 2em;
   width: 15em;
   display: flex;
-  flex-direction: row;
   justify-content: space-evenly;
 }
+
 .btn {
   width: 6em;
   font-family: "VT323";
+  text-shadow: 0px 0px 13px rgba(0, 255, 1, 1);
   font-size: 1em;
   background-color: transparent;
   color: rgb(0, 255, 85);
@@ -72,6 +74,7 @@ body {
   right: 0;
   bottom: 0;
 }
+
 #containerForm {
   display: flex;
   justify-content: center;
@@ -83,62 +86,150 @@ body {
   z-index: 2;
 }
 
-#bodyScreamer {
+#body-screamer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 #video2 {
   border-radius: 0.75em;
   scale: 1.3;
-  margin-top: 0;
 }
+
 #text {
   color: white;
   display: flex;
   justify-content: center;
-  margin-bottom: 5em;
+  margin-bottom: 2.5em;
 }
 
-#forum-body {
+#frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  background: rgb(28, 39, 34);
+  background: radial-gradient(
+    circle,
+    rgba(28, 39, 34, 1) 14%,
+    rgba(24, 34, 29, 1) 39%,
+    rgba(19, 29, 24, 1) 75%,
+    rgba(11, 22, 16, 1) 99%
+  );
+  z-index: 0;
+}
+
+#body-frame {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#screen {
+  z-index: 1;
+  position: absolute;
+  top: 2.5em;
+  left: 2em;
+  right: 2em;
+  bottom: 2.5em;
+  padding: 3% 5%;
+  color: rgb(0, 255, 85);
+  font-family: "VT323";
+  font-size: 1em;
+  text-shadow: 0px 0px 7px rgba(46, 215, 0, 1);
+}
+
+#forum-window {
+  position: absolute;
+  top: 4em;
+  left: 8em;
+  right: 8em;
+  bottom: 4em;
+  margin: 1em;
+  padding: 3% 5%;
+  background-color: transparent;
+}
+
+
+#text-box-container {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  right: 1em;
+  bottom: 2em;
+  margin: 3em;
+  padding: 2% 3%;
+  background-color: transparent;
+  box-shadow: 0px 0px 18px 1px rgba(6, 157, 20, 0.37);
+  border-style: solid;
+  border-radius: 5% / 80%;
+  overflow: auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column-reverse;
 }
 
-#forum-container {
-  display: flex;
-  flex-direction: column;
-  width: 50em;
-  padding: 1.25em;
-  padding-top: 0.5em;
-  border: 1px solid black;
-  background-color: #ededed;
+#welcome-msg {
+  position: absolute;
+  top: 0em;
+  left: 3em;
+  font-size: 1.5em;
 }
 
-#chat {
-  height: 30em;
-  margin-top: 0.5em;
-  margin-bottom: 1em;
-  border: 1px solid black;
-  padding: 0.25em;
-  background-color: white;
+#btn-deconnect {
+  position: absolute;
+  top: 1.45em;
+  right: 5em;
+  height: 2em;
 }
 
-#message {
-  flex-grow: 100;
+#msg {
+  position: absolute;
+  bottom: 1.1rem;
+  left: 4.5em;
+  right: 12rem;
+  height: 3em;
+  padding-left: 0.35em;
+  font-family: "VT323";
+  font-size: 1em;
+  background-color: transparent;
+  color: rgb(0, 255, 85);
+  border-color: rgb(0, 255, 85);
+  border-style: double;
+  border-radius: 2% / 90%;
 }
 
-#message_form {
-  display: flex;
-  gap: 0.5em;
+#btn-send {
+  position: absolute;
+  bottom: 1.3em;
+  right: 5em;
+  height: 3em;
+  width: 5em;
 }
 
-#forum-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.btn-forum {
+  font-family: "VT323";
+  text-shadow: 0px 0px 50px rgba(0, 255, 1, 1);
+  font-size: 1em;
+  background-color: transparent;
+  color: rgb(0, 255, 85);
+  border-color: rgb(0, 255, 85);
+  border-style: double;
+  border-radius: 5% / 80%;
+}
+
+.btn-forum:hover {
+  background-color: rgb(0, 255, 85);
+  color: rgb(6, 35, 4);
+  text-shadow: 0px 0px 1px rgb(6, 35, 4);
+}
+
+#msg:focus {
+  outline: none;
 }
 
 #errors-container {
@@ -153,4 +244,8 @@ body {
   font-size: large;
   height: 4em;
   overflow: hidden;
+}
+
+html {
+  background-color: black;
 }

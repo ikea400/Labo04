@@ -12,7 +12,7 @@
 
 <body>
     <video autoplay muted loop id="video">
-        <source src="../assets/videos/mylivewallpapers-com-Matrix-EDIT.mp4">
+        <source src="../assets/videos/background.mp4">
     </video>
     <div class="user-container">
         <div id="errors-container">
@@ -139,7 +139,7 @@
     <div id="containerForm">
         <form id="formulaire">
             <label class="label" for="username">Identifiant:</label>
-            <input class="input" name="username" type="text" placeholder="Entrez votre nom d'utilisateur" required />
+            <input class="input" name="username" type="text" placeholder="Entrez votre nom d'utilisateur" required autofocus/>
             <label class="label" for="password">Mot de passe:</label>
             <input class="input" name="password" placeholder="Entrez votre mot de passe" type="password" required />
             <div id="container">
